@@ -3,11 +3,12 @@ from google.appengine.ext import ndb
 
 class Game(ndb.Model):
     # Date
-    date = ndb.DateTimeProperty(auto_now=True)
+    date = ndb.DateTimeProperty(auto_now_add=True)
     # Location
     location = ndb.GeoPtProperty()
     # Team #1 colour, score
     # Team #2 colour, score
+    
     
     # MAYBE
     # Unique Observers
@@ -16,7 +17,7 @@ class Game(ndb.Model):
 
 class CreateGame(webapp2.RequestHandler):
     def put(self):
-        
+        # tEST COMMENT
         pass
 
 class ScoreboardApp(webapp2.RequestHandler):
