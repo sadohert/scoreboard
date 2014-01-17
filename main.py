@@ -15,6 +15,11 @@ class Game(ndb.Model):
     # Unique Contributors
     pass
 
+class GetGames(webapp2.RequestHandler):
+    def get(self):
+        self.response.write('<implement games list>')
+        pass
+
 class CreateGame(webapp2.RequestHandler):
     def put(self):
         # tEST COMMENT
