@@ -7,6 +7,21 @@ from google.appengine.ext import ndb
 from google.appengine.api import search
 from google.appengine.ext import db
 
+def coerce(value):
+    SIMPLE_TYPES = (int, long, float, bool, basestring)
+    if value is None or isinstance(value, SIMPLE_TYPES):
+        return value
+    elif isinstance(value, datetime.date):
+        return value.strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
+    elif hasattr(value, 'to_dict'):    # hooray for duck typing!
+        return value.to_dict()
+    elif isinstance(value, dict):
+        return dict((coerce(k), coerce(v)) for (k, v) in value.items())
+    elif hasattr(value, '__iter__'):    # iterable, not string
+        return map(coerce, value)
+    else:
+        raise ValueError('cannot encode %r' % value)
+
 class TeamEntity(ndb.Model):
     name = ndb.StringProperty()
     colour = ndb.StringProperty()
@@ -19,6 +34,13 @@ class TeamEntity(ndb.Model):
         
 
 class GameEntity(ndb.Model):
+#     def to_dict(self):
+#         output = {}
+#         for key, prop in self._properties.iteritems():
+#             value = coerce(getattr(self, key))
+#             if value is not None:
+#                 output[key] = value
+#         return output
     # Date
     date = ndb.DateTimeProperty(auto_now_add=True)
     # Location
@@ -29,14 +51,18 @@ class GameEntity(ndb.Model):
     # Game start time
     start_time = ndb.TimeProperty()
     description = ndb.StringProperty()
-    type = ndb.StringProperty()
-    age_category = ndb.IntegerProperty()
-    gender_category = ndb.IntegerProperty()
+    type = ndb.IntegerProperty()
+    age_category = ndb.IntegerProperty(default=0)
+    gender_category = ndb.IntegerProperty(default=0)
     # MAYBE
     # Unique Observers
     # Unique Contributors
+    def to_dict(self):
+        ret = ndb.Model.to_dict(self, exclude=['date', 'start_time', 'location'])
+        return ret
+
     def toJson(self):
-        pass
+        return json.dumps(self.to_dict())
 
 # class Game(object):
 #     ''' Wrapper class for GameEntity that will incorporate the Search API
@@ -125,14 +151,15 @@ class CreateGame(webapp2.RequestHandler):
             ng = GameEntity(location=ndb.GeoPt("%s, %s" % (newgame_json['location']['lat'], newgame_json['location']['lon'])), 
                             teams=[TeamEntity.fromTuple(newgame_json['teams'][0]),
                                    TeamEntity.fromTuple(newgame_json['teams'][1])],
-                            start_time=datetime.time(newgame_json['start_time']),
+                            start_time=datetime.datetime.strptime(newgame_json['start_time'], "%H:%M").time(),
                             description=newgame_json['description'],
                             type=newgame_json['type'])
             ng.put()
             # return response with new_game datastore ID.  Possibly json version
             # of game as well
             self.response.headers['Content-Type'] = 'application/json'
-            self.response.write(json.dumps(db.to_dict(ng)))
+
+            self.response.write(json.dumps(ng.to_dict()))
         else:
             # Error.  This handler shouldn't be called without a proper
             # json object to define a new game

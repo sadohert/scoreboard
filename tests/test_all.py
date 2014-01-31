@@ -7,6 +7,10 @@ import unittest2
 import webapp2
 import json
 
+from google.appengine.ext import testbed
+
+from google.appengine.ext import ndb
+from google.appengine.ext import db
 # from the app main.py
 import main
 
@@ -22,7 +26,16 @@ class TestGeneric(unittest2.TestCase):
         self.assertEqual(response.body, 'Hello, webapp2! STU!!')
 
 class TestGameCreation(unittest2.TestCase):
-        
+    def setUp(self):
+        # GAE Local testing boilerplate code
+        self.testbed = testbed.Testbed()
+        self.testbed.activate()
+        self.testbed.init_datastore_v3_stub()
+        self.testbed.init_memcache_stub()
+
+    def tearDown(self):
+        self.testbed.deactivate()
+                        
     def test_basic(self):
         '''Basic first test of handler that doesn't implement 'GET'
         '''
@@ -36,7 +49,7 @@ class TestGameCreation(unittest2.TestCase):
         ng_json = '''
             {
               "version": "0", 
-              "start_time": "19:00",
+              "start_time": "17:00",
               "description": "League play between U13 boys team", 
               "age_category": 3,
               "gender_category": 0, 
