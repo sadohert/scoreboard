@@ -15,6 +15,7 @@ from google.appengine.ext import db
 import main
 
 class TestGeneric(unittest2.TestCase):
+    @unittest2.skip("Root handler in flux")
     def test_root(self):
         # Build a request object passing the URI path to be tested.
         # You can also pass headers, query arguments etc.
@@ -79,6 +80,8 @@ class TestGameCreation(unittest2.TestCase):
         response = post_request.get_response(main.app)
         # Let's check if the response is correct.
         self.assertEqual(response.status_int, 200)
+        body_dict = json.loads(response.body)
+        self.assertEqual(body_dict['start_time'], "17:00")
         
         # Verify response.body
         
