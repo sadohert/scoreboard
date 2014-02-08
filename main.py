@@ -59,10 +59,9 @@ class GameEntity(ndb.Model):
     # Unique Contributors
     def to_dict(self):
         ret = ndb.Model.to_dict(self, exclude=['date', 'start_time', 'location'])
+        ret['gid'] = str(self.key.id())
+        ret['start_time'] = self.start_time.strftime('%H:%M')
         return ret
-
-    def toJson(self):
-        return json.dumps(self.to_dict())
 
 # class Game(object):
 #     ''' Wrapper class for GameEntity that will incorporate the Search API
