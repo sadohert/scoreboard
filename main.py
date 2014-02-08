@@ -6,21 +6,22 @@ import webapp2
 from google.appengine.ext import ndb
 from google.appengine.api import search
 from google.appengine.ext import db
+#from google.appengine.ext.webapp import template
 
-def coerce(value):
-    SIMPLE_TYPES = (int, long, float, bool, basestring)
-    if value is None or isinstance(value, SIMPLE_TYPES):
-        return value
-    elif isinstance(value, datetime.date):
-        return value.strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
-    elif hasattr(value, 'to_dict'):    # hooray for duck typing!
-        return value.to_dict()
-    elif isinstance(value, dict):
-        return dict((coerce(k), coerce(v)) for (k, v) in value.items())
-    elif hasattr(value, '__iter__'):    # iterable, not string
-        return map(coerce, value)
-    else:
-        raise ValueError('cannot encode %r' % value)
+# def coerce(value):
+#     SIMPLE_TYPES = (int, long, float, bool, basestring)
+#     if value is None or isinstance(value, SIMPLE_TYPES):
+#         return value
+#     elif isinstance(value, datetime.date):
+#         return value.strftime('%Y-%m-%d %H:%M:%S.%f')[:-3]
+#     elif hasattr(value, 'to_dict'):    # hooray for duck typing!
+#         return value.to_dict()
+#     elif isinstance(value, dict):
+#         return dict((coerce(k), coerce(v)) for (k, v) in value.items())
+#     elif hasattr(value, '__iter__'):    # iterable, not string
+#         return map(coerce, value)
+#     else:
+#         raise ValueError('cannot encode %r' % value)
 
 class TeamEntity(ndb.Model):
     name = ndb.StringProperty()
@@ -164,12 +165,15 @@ class CreateGame(webapp2.RequestHandler):
             # json object to define a new game
             logging.error("Error in CreateGame: %s", 'No defined json')
 
-class ScoreboardApp(webapp2.RequestHandler):
+class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('Hello, webapp2! STU!!')
+        f = open("client/app/index.html", 'r')
+        self.response.write(f.read())
 
 routes = [
-    (r'/', 'main.ScoreboardApp'),
+    (r'/', 'main.MainHandler'),
+    (r'/view2', 'main.MainHandler'),
+    (r'/view3', 'main.MainHandler'),
     (r'/newgame', 'main.CreateGame'), # TODO Request create game "PUT"
     
     # TODO Request game list "GET"
