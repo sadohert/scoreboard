@@ -11,4 +11,8 @@ angular.module('myApp.controllers', []).
   }])
   .controller('NewGame', [function() {
 
+
+  }])
+  .controller('GetGames', [function() {
+
   }]);

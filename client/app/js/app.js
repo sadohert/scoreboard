@@ -12,6 +12,7 @@ angular.module('myApp', [
 config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/client/view1', {templateUrl: 'partials/partial1.html', controller: 'MyCtrl1'});
   $routeProvider.when('/client/view2', {templateUrl: 'partials/partial2.html', controller: 'MyCtrl2'});
+  $routeProvider.when('/client/games', {templateUrl: 'partials/games.html', controller: 'GetGames'});
   $routeProvider.when('/client/newgame', {templateUrl: 'partials/newgame.html', controller: 'NewGame'});
   $routeProvider.otherwise({redirectTo: '/client/view1'});
 }]);
