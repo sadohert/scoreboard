@@ -172,8 +172,9 @@ class MainHandler(webapp2.RequestHandler):
 
 routes = [
     (r'/', 'main.MainHandler'),
-    (r'/view2', 'main.MainHandler'),
-    (r'/view3', 'main.MainHandler'),
+    (r'/client/view2', 'main.MainHandler'),
+    (r'/client/view3', 'main.MainHandler'),
+    (r'/client/newgame', 'main.MainHandler'),
     (r'/newgame', 'main.CreateGame'), # TODO Request create game "PUT"
     
     # TODO Request game list "GET"

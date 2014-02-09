@@ -8,4 +8,7 @@ angular.module('myApp.controllers', []).
   }])
   .controller('MyCtrl2', [function() {
 
+  }])
+  .controller('NewGame', [function() {
+
   }]);
