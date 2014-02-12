@@ -1,0 +1,68 @@
+[
+    {
+      "version": "0", 
+      "start_time": "17:00",
+      "description": "League play between U13 boys team", 
+      "age_category": 3,
+      "gender_category": 0, 
+      "type": 0, 
+      "location": {
+        "lat": 50, 
+        "lon": 120
+      }, 
+      "teams": [
+        [
+          "Waterloo", 
+          "yellow"
+        ], 
+        [
+          "Kitchener", 
+          "green"
+        ]
+      ]
+    },
+    {
+      "version": "0", 
+      "start_time": "16:00",
+      "description": "Squirt House League Co-ed", 
+      "age_category": 2,
+      "gender_category": 0, 
+      "type": 0, 
+      "location": {
+        "lat": 49, 
+        "lon": 125
+      }, 
+      "teams": [
+        [
+          "Sponsor X", 
+          "green"
+        ], 
+        [
+          "Sponsor Y", 
+          "orange"
+        ]
+      ]
+    },
+    {
+      "version": "0", 
+      "start_time": "21:00",
+      "description": "Men's KDSL", 
+      "age_category": 0,
+      "gender_category": 1, 
+      "type": 0, 
+      "location": {
+        "lat": 52, 
+        "lon": 120
+      }, 
+      "teams": [
+        [
+          "Als Motors", 
+          "white"
+        ], 
+        [
+          "Polish Eagles", 
+          "red"
+        ]
+      ]
+    }
+]

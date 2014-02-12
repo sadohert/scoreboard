@@ -165,6 +165,13 @@ class CreateGame(webapp2.RequestHandler):
             # json object to define a new game
             logging.error("Error in CreateGame: %s", 'No defined json')
 
+class ListGames(webapp2.RequestHandler):
+    def get(self):
+        self.response.headers['Content-Type'] = 'application/json'
+
+        self.response.write(open("test_games.json", 'r').read())
+       
+
 class MainHandler(webapp2.RequestHandler):
     def get(self):
         f = open("client/app/index.html", 'r')
@@ -176,6 +183,7 @@ routes = [
 #    (r'/client/view3', 'main.MainHandler'),
     (r'/client/.*', 'main.MainHandler'),
     (r'/newgame', 'main.CreateGame'), # TODO Request create game "PUT"
+    (r'/listgames', 'main.ListGames'),
     
     # TODO Request game list "GET"
     # TODO Request game update "GET"

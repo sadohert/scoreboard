@@ -13,6 +13,7 @@ angular.module('myApp.controllers', []).
 
 
   }])
-  .controller('GetGames', [function() {
+  .controller('GetGames', ['$scope', 'Games', function($scope, Games) {
+	  $scope.games = Games.query();
 
   }]);
