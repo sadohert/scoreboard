@@ -1,5 +1,11 @@
 <p>Create New Game.</p>
-<p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>
+<div ng-init="colours=[{name:'red'},{name:'blue'}, {name:'black'}]">
+  <form novalidate class="simple-form">
+  Team #1<br />
+  Name: <input type="text" ng-model="game.team1" required /> <br />
+  Colour: <select ng-model="game.team1colour" ng-options="c.name for c in colours" required ></select><br />
+  Team #2<br />
+  Name: <input type="text" ng-model="game.team2" required /> <br />
+  Colour: <select ng-model="game.team2colour" ng-options="c.name for c in colours" required ></select><br />
+  </form>
+</div>
