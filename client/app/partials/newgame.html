@@ -1,6 +1,11 @@
 <p>Create New Game.</p>
-<div ng-init="colours=[{name:'red'},{name:'blue'}, {name:'black'}]">
+<div >
   <form novalidate class="simple-form">
+  Game Time: <select ng-model="game.start_time" ng-options="t for t in start_times" required ></select><br />
+  Match Description: <input type="text" ng-model="game.description" /> <br />
+  Age Group: <select ng-model="game.age_category" ng-options="a.value as a.name for a in ages" required ></select><br />
+  Gender: <select ng-model="game.gender_category" ng-options="g.value as g.name for g in genders" required ></select><br />
+  <br />
   Team #1<br />
   Name: <input type="text" ng-model="game.team1" required /> <br />
   Colour: <select ng-model="game.team1colour" ng-options="c.name for c in colours" required ></select><br />
